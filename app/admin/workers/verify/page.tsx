@@ -51,7 +51,7 @@ export default async function VerifyWorkersPage() {
                   <span className="font-semibold text-lg">{worker.full_name}</span>
                   <div className="text-sm text-muted-foreground grid grid-cols-2 gap-x-4">
                     <span>Phone: {worker.phone}</span>
-                    <span className="capitalize">Gender: {worker.workers[0]?.gender}</span>
+                    <span className="capitalize">Gender: {(Array.isArray(worker.workers) ? worker.workers[0] : worker.workers)?.gender}</span>
                     <span className="col-span-2">Address: {worker.address}</span>
                   </div>
                 </div>

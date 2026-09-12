@@ -9,7 +9,7 @@ import { format } from "date-fns";
 export default async function AdminBookingsPage() {
   const supabase = await createClient();
 
-  const { data: bookings } = await supabase
+  const { data: bookings, error } = await supabase
     .from("bookings")
     .select(`
       id,
@@ -25,13 +25,14 @@ export default async function AdminBookingsPage() {
     `)
     .order("created_at", { ascending: false });
 
-  if (!bookings || bookings.length === 0) {
+  if (error || !bookings || bookings.length === 0) {
     return (
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground">All Bookings</h2>
         <Card>
-          <CardContent className="pt-6 text-center text-muted-foreground">
-            No bookings found.
+          <CardContent className="pt-6 text-center text-muted-foreground flex flex-col gap-2">
+            <span>No bookings found.</span>
+            {error && <span className="text-destructive text-sm font-mono">Error: {error.message || JSON.stringify(error)}</span>}
           </CardContent>
         </Card>
       </div>

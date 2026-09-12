@@ -86,10 +86,11 @@ export default async function AdminWorkersPage() {
       </div>
 
       <div className="grid gap-4">
-        {workersWithPayroll.length === 0 ? (
+        {error || workersWithPayroll.length === 0 ? (
           <Card>
-            <CardContent className="pt-6 text-center text-muted-foreground">
-              No workers found.
+            <CardContent className="pt-6 text-center text-muted-foreground flex flex-col gap-2">
+              <span>No workers found.</span>
+              {error && <span className="text-destructive text-sm font-mono">Error: {error.message || JSON.stringify(error)}</span>}
             </CardContent>
           </Card>
         ) : (

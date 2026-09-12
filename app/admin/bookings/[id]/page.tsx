@@ -160,7 +160,7 @@ export default async function BookingDetailPage({ params }: { params: Promise<{ 
                   <Crop className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Farm Details</p>
-                    <p className="text-muted-foreground">{booking.crops.name} • {booking.farm_size_acres} acres</p>
+                    <p className="text-muted-foreground">{(Array.isArray(booking.crops) ? booking.crops[0] : booking.crops)?.name} • {booking.farm_size_acres} acres</p>
                     <p className="text-muted-foreground">Est. Workers Needed: {booking.estimated_workers_needed || 'Not specified'}</p>
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export default async function BookingDetailPage({ params }: { params: Promise<{ 
                   <div>
                     <p className="text-sm font-medium">Work Types</p>
                     <p className="text-muted-foreground">
-                      {booking.booking_work_types.map((bwt: any) => bwt.work_types.name).join(", ")}
+                      {(booking.booking_work_types || []).map((bwt: any) => (Array.isArray(bwt.work_types) ? bwt.work_types[0] : bwt.work_types)?.name).join(", ")}
                     </p>
                   </div>
                 </div>
