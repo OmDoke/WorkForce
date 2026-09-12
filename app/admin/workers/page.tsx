@@ -99,8 +99,8 @@ export default async function AdminWorkersPage() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-lg">{worker.full_name}</span>
-                    <Badge variant={worker.workers[0]?.has_bike ? "default" : "secondary"}>
-                      {worker.workers[0]?.has_bike ? "Has Bike" : "No Bike"}
+                    <Badge variant={(Array.isArray(worker.workers) ? worker.workers[0] : worker.workers)?.has_bike ? "default" : "secondary"}>
+                      {(Array.isArray(worker.workers) ? worker.workers[0] : worker.workers)?.has_bike ? "Has Bike" : "No Bike"}
                     </Badge>
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -114,7 +114,7 @@ export default async function AdminWorkersPage() {
                 <div className="mt-4 sm:mt-0">
                   <WorkerStatusToggle 
                     workerId={worker.id} 
-                    initialIsOnLeave={worker.workers[0]?.is_on_leave || false} 
+                    initialIsOnLeave={(Array.isArray(worker.workers) ? worker.workers[0] : worker.workers)?.is_on_leave || false} 
                   />
                 </div>
               </div>

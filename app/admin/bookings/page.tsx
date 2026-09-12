@@ -48,7 +48,7 @@ export default async function AdminBookingsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 transition-colors">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold">{booking.profiles.full_name}'s Farm</span>
+                  <span className="font-semibold">{(Array.isArray(booking.profiles) ? booking.profiles[0] : booking.profiles)?.full_name}'s Farm</span>
                   <Badge 
                     variant={
                       booking.status === 'pending' ? 'destructive' :

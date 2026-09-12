@@ -123,10 +123,10 @@ export default async function BookingDetailPage({ params }: { params: Promise<{ 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-4 border-b">
               <div className="space-y-1">
-                <CardTitle>{booking.profiles.full_name}&apos;s Farm</CardTitle>
+                <CardTitle>{(Array.isArray(booking.profiles) ? booking.profiles[0] : booking.profiles)?.full_name}&apos;s Farm</CardTitle>
                 <div className="flex items-center text-sm text-muted-foreground gap-2">
                   <MapPin className="w-4 h-4" />
-                  {booking.profiles.address}
+                  {(Array.isArray(booking.profiles) ? booking.profiles[0] : booking.profiles)?.address}
                 </div>
               </div>
               <Badge 
@@ -150,7 +150,7 @@ export default async function BookingDetailPage({ params }: { params: Promise<{ 
                   <Phone className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Contact</p>
-                    <p className="text-muted-foreground">{booking.profiles.phone}</p>
+                    <p className="text-muted-foreground">{(Array.isArray(booking.profiles) ? booking.profiles[0] : booking.profiles)?.phone}</p>
                   </div>
                 </div>
               </div>
