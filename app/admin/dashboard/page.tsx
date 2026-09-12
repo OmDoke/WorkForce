@@ -5,22 +5,18 @@ import { redirect } from "next/navigation";
 import { unstable_cache } from "next/cache";
 import { createClient as createRawClient } from "@supabase/supabase-js";
 
-const getCachedAdminCounts = unstable_cache(
-  async () => {
-    const supabase = createRawClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-    const { data, error } = await supabase.rpc("get_admin_dashboard_counts");
-    if (error) {
-      console.error("Failed to fetch dashboard counts:", error);
-      return null;
-    }
-    return data;
-  },
-  ["admin-dashboard-counts"],
-  { tags: ["admin-dashboard-counts"], revalidate: 3600 }
-);
+async function getAdminCounts() {
+  const supabase = createRawClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+  const { data, error } = await supabase.rpc("get_admin_dashboard_counts");
+  if (error) {
+    console.error("Failed to fetch dashboard counts:", error);
+    return null;
+  }
+  return data;
+}
 
 export default async function AdminDashboard() {
   const supabase = await createClient();
@@ -30,8 +26,8 @@ export default async function AdminDashboard() {
     redirect("/login");
   }
 
-  // Fetch live dashboard counts from the highly optimized Next.js cache
-  const counts = await getCachedAdminCounts();
+  // Fetch live dashboard counts
+  const counts = await getAdminCounts();
 
   const {
     unaccepted_bookings = 0,
